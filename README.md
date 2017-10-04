@@ -1,3 +1,42 @@
+# Vadyms instructions
+1) download on PC
+https://ttnreleases.blob.core.windows.net/packet-forwarder/master/imst-rpi-pktfwd.tar.gz
+2) SSH into rpi3. Copy downloaded tar.gz archive into /home/pi/
+3) in SSH terminal
+
+```
+sudo -i
+cd /home/pi/
+mv MY_ARCHIVE.tar.gz /usr/bin/
+cd /usr/bin/
+tar xvzf MY_ARCHIVE.tar.gz
+```
+
+At this point you should have the downloaded archive opened and its files in /usr/bin/ directory.
+4) Create a configuration file in a permanent location, such as in a /usr/bin directory:
+```
+nano /usr/bin/ttn-pkt-fwd.yml
+```
+5)Set up this configuration file (for this step you will need to set up device on TTN and have devID(name of gteway) and gateways keys):
+```
+cd /usr/bin/
+packet-forwarder configure /usr/bin/ttn-pkt-fwd.yml
+```
+Follow instructions in console. Then
+
+```
+cd /usr/bin/
+./install-systemd.sh /usr/bin/packet-forwarder /usr/bin/ttn-pkt-fwd.yml
+```
+IF all went well - OK.
+
+6)Reload the systemd daemon, and start the service:
+```
+sudo systemctl daemon-reload
+sudo systemctl enable ttn-pkt-fwd
+sudo systemctl start ttn-pkt-fwd
+```
+
 # Packet Forwarder
 
 **⚠️ The development of this packet forwarder has been put on hold. We're currently working on new tools to make gateways easier to manage, that we will make public when ready. In the meanwhile, we recommend to use other packet forwarders ([Semtech packet forwarder](https://github.com/Lora-net/packet_forwarder), [MP packet forwarder](https://github.com/kersing/packet_forwarder)). To learn more, join the discussion on [the forum](https://www.thethingsnetwork.org/forum/t/new-ttn-packet-forwarder-available/7644/46).**
